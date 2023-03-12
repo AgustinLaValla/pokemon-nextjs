@@ -15,6 +15,9 @@ const Layout: React.FC<Props> = ({ title, children }) => {
         <meta name='author' content='Agustin La Valla' />
         <meta name='description' content={`Information about pokemon: ${title}`} />
         <meta name="keywords" content={`${title}, pokemon, pokedex`} />
+
+        <meta property="og:title" content={`Information about pokemon: ${title}`} />
+        <meta property="og:description" content={`Page about ${title}`} />
       </Head>
 
       <Navbar />

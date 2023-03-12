@@ -1,15 +1,40 @@
-import { FC } from 'react'
+import React, { FC } from 'react'
 import { GetStaticProps, NextPage, GetStaticPaths } from 'next';
 import { Button, Card, Container, Grid, Image, Text } from '@nextui-org/react';
 import { Pokemon } from '@/interfaces'
-import { pokeApi } from '@/api';
 import Layout from '@/components/layouts/Layout';
+import { favoritesService, pokemonService } from '@/services';
+import confetti from 'canvas-confetti';
 
 type Props = {
   pokemon: Pokemon;
 }
 
 const PokemonPage: FC<Props> = ({ pokemon }) => {
+
+  const [isFavorite, setIsFavorite] = React.useState(false);
+
+  const onToggleFavorite = () => {
+    favoritesService.toggleFavorites(pokemon.id);
+    setIsFavorite(prev => !prev);
+    if (isFavorite) return;
+
+    confetti({
+      zIndex: 999,
+      particleCount: 100,
+      spread: 160,
+      angle: -100,
+      origin: {
+        x: 1,
+        y: 0,
+      }
+    })
+  }
+
+
+  React.useEffect(() => {
+    setIsFavorite(favoritesService.existInFavorites(pokemon.id));
+  }, [])
 
   return (
     <Layout title={pokemon.name}>
@@ -35,8 +60,9 @@ const PokemonPage: FC<Props> = ({ pokemon }) => {
               <Button
                 color="gradient"
                 ghost
+                onClick={onToggleFavorite}
               >
-                Guardar en favoritos
+                {!isFavorite ? 'Save as favorite' : 'In favorites'}
               </Button>
             </Card.Header>
 
@@ -97,11 +123,9 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 
   const { id } = ctx.params as { id: string };
 
-  const { data: pokemon } = await pokeApi.get<Pokemon>(`/pokemon/${id}`)
-
   return {
     props: {
-      pokemon
+      pokemon: await pokemonService.getPokemon(id)
     }
   }
 }

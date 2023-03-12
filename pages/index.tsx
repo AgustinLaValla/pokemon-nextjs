@@ -8,6 +8,7 @@ import Layout from '@/components/layouts/Layout'
 import { PokemonListResponse, SmallPokemon } from '@/interfaces'
 import { pokeApi } from '@/api'
 import PokemonCard from '@/components/pokemon/PokemonCard'
+import { pokemonService } from '@/services'
 
 interface Props {
   pokemons: SmallPokemon[]
@@ -26,7 +27,7 @@ const Home: NextPage<Props> = ({ pokemons }) => {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const { data } = await pokeApi.get<PokemonListResponse>('/pokemon?limit=151');
+  const data = await pokemonService.getPokemons();
 
   const pokemons: SmallPokemon[] = data.results.map((poke, i) => ({
     ...poke,

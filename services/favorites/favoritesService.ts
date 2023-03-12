@@ -1,8 +1,8 @@
-const getFavorites = (id: number): number[] =>
+const getFavorites = (): number[] =>
   JSON.parse(localStorage.getItem('favorites') || '[]');
 
 const toggleFavorites = (id: number): void => {
-  let favorites: number[] = getFavorites(id);
+  let favorites: number[] = getFavorites();
 
   if (favorites.includes(id)) {
     favorites = favorites.filter(favorite => favorite !== id);
@@ -16,7 +16,7 @@ const toggleFavorites = (id: number): void => {
 const existInFavorites = (id: number): boolean => {
   if (typeof window === 'undefined') return false;
 
-  const favorites = getFavorites(id);
+  const favorites = getFavorites();
 
   return favorites.includes(id);
 }
