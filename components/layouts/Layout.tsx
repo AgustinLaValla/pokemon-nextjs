@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import React from 'react'
 import Navbar from '../UI/Navbar';
 
@@ -7,7 +8,10 @@ type Props = {
   children: JSX.Element | JSX.Element[];
 }
 
+const origin = typeof window === 'undefined' ? '' : window.location.origin;
+
 const Layout: React.FC<Props> = ({ title, children }) => {
+
   return (
     <>
       <Head>
@@ -18,9 +22,10 @@ const Layout: React.FC<Props> = ({ title, children }) => {
 
         <meta property="og:title" content={`Information about pokemon: ${title}`} />
         <meta property="og:description" content={`Page about ${title}`} />
+        <meta property='og:image' content={`${origin}/imgs/pokemon.jpeg`} />
       </Head>
 
-      <div style={{height: '100vh'}}>
+      <div style={{ height: '100vh' }}>
         <Navbar />
         <main
           style={{
