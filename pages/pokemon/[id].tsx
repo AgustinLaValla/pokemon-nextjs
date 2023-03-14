@@ -114,7 +114,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const ids = [...Array(151)].map((_, i) => `${i + 1}`);
 
   return {
-    fallback: false,
+    fallback: 'blocking',
     paths: ids.map(id => ({ params: { id } }))
   }
 }
@@ -122,6 +122,17 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async (ctx) => {
 
   const { id } = ctx.params as { id: string };
+
+  const pokemon = await pokemonService.getPokemon(id);
+
+  if (!pokemon) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    }
+  }
 
   return {
     props: {

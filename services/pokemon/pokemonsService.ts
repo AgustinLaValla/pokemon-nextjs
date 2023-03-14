@@ -7,16 +7,17 @@ const getPokemons = async (): Promise<PokemonListResponse> => {
   return data;
 }
 
-const getPokemon = async (id: string): Promise<Pokemon> => {
-  const { data } = await pokeApi.get<Pokemon>(`/pokemon/${id}`);
+const getPokemon = (id: string): Promise<Pokemon | null> => {
 
-  return data;
+  return pokeApi.get<Pokemon>(`/pokemon/${id}`)
+    .then(({ data }) => data)
+    .catch(() => null)
 }
 
-const getPokemonByName = async (pokemonName: string): Promise<Pokemon> => {
-  const { data } = await pokeApi.get<Pokemon>(`/pokemon/${pokemonName}`);
-
-  return data;
+const getPokemonByName = (pokemonName: string): Promise<Pokemon | null> => {
+  return pokeApi.get<Pokemon>(`/pokemon/${pokemonName}`)
+    .then(({ data }) => data)
+    .catch(() => null);
 }
 
 export const pokemonService = {
