@@ -13,19 +13,14 @@ const getPokemon = async (id: string): Promise<Pokemon> => {
   return data;
 }
 
-const getPokemonInfo = async (nameOrId: string) => {
-  const { data } = await pokeApi.get<Pokemon>(`/pokemon/${nameOrId}`);
+const getPokemonByName = async (pokemonName: string): Promise<Pokemon> => {
+  const { data } = await pokeApi.get<Pokemon>(`/pokemon/${pokemonName}`);
 
-  const { id, name, sprites } = data;
-
-  return {
-    id,
-    name,
-    sprites
-  }
+  return data;
 }
 
 export const pokemonService = {
   getPokemons,
-  getPokemon
+  getPokemon,
+  getPokemonByName
 }

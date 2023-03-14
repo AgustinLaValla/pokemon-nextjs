@@ -1,5 +1,5 @@
-import React, { FC } from 'react'
-import { GetStaticProps, GetStaticPaths } from 'next';
+import React from 'react'
+import { GetStaticPaths, GetStaticProps } from 'next';
 import { Button, Card, Container, Grid, Image, Text } from '@nextui-org/react';
 import { Pokemon } from '@/interfaces'
 import Layout from '@/components/layouts/Layout';
@@ -7,11 +7,10 @@ import { favoritesService, pokemonService } from '@/services';
 import confetti from 'canvas-confetti';
 
 type Props = {
-  pokemon: Pokemon;
+  pokemon: Pokemon
 }
 
-const PokemonPage: FC<Props> = ({ pokemon }) => {
-
+const PokemonByName: React.FC<Props> = ({pokemon}) => {
   const [isFavorite, setIsFavorite] = React.useState(false);
 
   const onToggleFavorite = () => {
@@ -110,24 +109,23 @@ const PokemonPage: FC<Props> = ({ pokemon }) => {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-
-  const ids = [...Array(151)].map((_, i) => `${i + 1}`);
+  const { results } = await pokemonService.getPokemons();
 
   return {
-    fallback: false,
-    paths: ids.map(id => ({ params: { id } }))
+    paths: results.map(({ name }) => ({ params: { name } })),
+    fallback: false
   }
-}
+};
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
 
-  const { id } = ctx.params as { id: string };
+  const params = ctx.params as { name: string };
 
   return {
     props: {
-      pokemon: await pokemonService.getPokemon(id)
+      pokemon: await pokemonService.getPokemonByName(params.name)
     }
   }
 }
 
-export default PokemonPage;
+export default PokemonByName

@@ -16,7 +16,7 @@ const PokemonCard: FC<Props> = ({ pokemon }) => {
       <Card
         isHoverable
         isPressable
-        onClick={() => push(`/pokemon/${pokemon.id}`)}
+        onClick={() => push(`/pokemon/name/${pokemon.name}`)}
       >
         <Card.Body css={{ p: 1 }}>
           <Card.Image

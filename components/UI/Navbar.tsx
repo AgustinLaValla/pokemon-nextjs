@@ -14,8 +14,13 @@ const Navbar = () => {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'start',
-      padding: '0x 50px',
-      backgroundColor: theme?.colors.gray900.value
+      padding: '0px 3rem 0 2rem',
+      position: 'sticky',
+      top: '0',
+      left: '0',
+      zIndex: 999,
+      backgroundColor: theme?.colors.gray50.value || '#ECEDEE',
+      color:'black'
     }}>
       <Image
         src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png"
@@ -35,7 +40,7 @@ const Navbar = () => {
 
       <NextLink href="/favorites" passHref legacyBehavior>
         <Link css={{ marginRight: '0.625rem' }}>
-          <Text color='white'>Favorites</Text>
+          <Text color='white' h3>Favorites</Text>
         </Link>
       </NextLink>
 

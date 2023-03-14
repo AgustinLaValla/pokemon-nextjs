@@ -10,7 +10,7 @@ const FavoritesPokemons: React.FC<Props> = ({ pokemonsIds }) => {
   return (
     <Grid.Container gap={2} direction='row' justify='flex-start' >{
       pokemonsIds.map(pokemonId =>
-        <FavoritesPokemonCard pokemonId={pokemonId} />)
+        <FavoritesPokemonCard key={pokemonId} pokemonId={pokemonId} />)
     }</Grid.Container>
   )
 }

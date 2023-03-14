@@ -20,14 +20,17 @@ const Layout: React.FC<Props> = ({ title, children }) => {
         <meta property="og:description" content={`Page about ${title}`} />
       </Head>
 
-      <Navbar />
-      <main
-        style={{
-          padding: '0px 1.25rem'
-        }}
-      >
-        {children}
-      </main>
+      <div style={{height: '100vh'}}>
+        <Navbar />
+        <main
+          style={{
+            padding: '0px 1.25rem'
+          }}
+        >
+          {children}
+        </main>
+
+      </div>
     </>
   )
 }
