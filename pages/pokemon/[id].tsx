@@ -126,7 +126,8 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   return {
     props: {
       pokemon: await pokemonService.getPokemon(id)
-    }
+    },
+    revalidate: 86400
   }
 }
 
